@@ -11,7 +11,7 @@ import (
 func main() {
 	go func() {
 		for {
-			log.Println("Working ok")
+			log.Println("All is working ok")
 			time.Sleep(5 * time.Second)
 		}
 	}()

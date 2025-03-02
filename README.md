@@ -1,5 +1,5 @@
 ```shell
-VER=1.0
+VER=1.1
 docker build --file service.Dockerfile -t mosceo/printapp:${VER} .
 docker push mosceo/printapp:${VER}
 ```
