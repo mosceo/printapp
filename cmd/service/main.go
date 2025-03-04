@@ -1,18 +1,33 @@
 package main
 
 import (
+	"context"
 	"log"
 	"os"
 	"os/signal"
 	"syscall"
 	"time"
+
+	"github.com/redis/go-redis/v9"
 )
 
 func main() {
+	client := redis.NewClient(&redis.Options{
+		Addr:     "redis:6379",
+		Password: "",
+		DB:       0,
+	})
+
 	go func() {
 		for {
-			log.Println("All is working ok")
-			time.Sleep(5 * time.Second)
+			ctx := context.Background()
+			err := client.Set(ctx, "key", "value", 0).Err()
+			if err != nil {
+				log.Println(err)
+			} else {
+				log.Println("redis get: ok")
+			}
+			time.Sleep(time.Second)
 		}
 	}()
 
@@ -20,5 +35,5 @@ func main() {
 	signal.Notify(interrupt, syscall.SIGINT, syscall.SIGTERM)
 	<-interrupt
 
-	log.Println("Exiting out on signal")
+	log.Println("Exiting...")
 }
