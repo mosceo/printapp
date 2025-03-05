@@ -22,14 +22,10 @@ func (c *Calculator) Set(n int) (float64, bool) {
 	dn := n - c.n
 
 	rate := float64(dn) / dt.Seconds()
+	grown := rate > c.prevRate
 
 	c.t = time.Now()
 	c.n = n
-
-	var grown bool
-	if rate > c.prevRate {
-		grown = true
-	}
 	c.prevRate = rate
 
 	return rate, grown
